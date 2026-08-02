@@ -1,0 +1,398 @@
+/* ==========================================================================
+   AMAR CHOUBEY — NASA-GRADE 3D SOLAR SYSTEM CINEMATIC STYLESHEET
+   Sci-Fi Telemetry HUD, Holographic Glass Cards, Target Reticles & Preloader
+   ========================================================================== */
+
+:root {
+    --space-bg: #030508;
+    --nasa-blue: #0B3D91;
+    --nasa-red: #FC3D21;
+    --gold-glow: #F3BA42;
+    --cyan-glow: #00F0FF;
+    --sage-accent: #6B9E78;
+    
+    --glass-hud: rgba(6, 11, 22, 0.82);
+    --glass-card: rgba(10, 16, 30, 0.88);
+    --border-glow: rgba(0, 240, 255, 0.25);
+    --border-subtle: rgba(255, 255, 255, 0.12);
+    
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-sans: 'Inter', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--space-bg);
+    color: #F4F6FB;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    user-select: none;
+}
+
+#solar-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+}
+
+/* NASA Loading Screen */
+.nasa-preloader {
+    position: fixed;
+    inset: 0;
+    background-color: var(--space-bg);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.nasa-preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-box {
+    width: 360px;
+    text-align: center;
+}
+
+.nasa-logo-badge {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    color: var(--cyan-glow);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.loader-title {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    font-style: italic;
+    color: #FFF;
+    margin-bottom: 2rem;
+}
+
+.rocket-track {
+    position: relative;
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 1.2rem;
+}
+
+.rocket-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--nasa-blue) 0%, var(--cyan-glow) 100%);
+    box-shadow: 0 0 15px var(--cyan-glow);
+    transition: width 0.15s ease;
+}
+
+.rocket-telemetry {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: #8E99B0;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Solar Header HUD */
+.solar-hud-top {
+    position: fixed;
+    top: 1.5rem;
+    left: 1.5rem;
+    right: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1.5rem;
+    background: var(--glass-hud);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-glow);
+    border-radius: 100px;
+    z-index: 100;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.brand-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: #FFF;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+.brand-link svg { color: var(--cyan-glow); }
+
+.solar-title-badge {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    letter-spacing: 0.05em;
+    color: var(--cyan-glow);
+    font-weight: 600;
+    font-style: italic;
+    text-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+}
+
+.solar-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.solar-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-subtle);
+    color: #FFF;
+    padding: 0.5rem 1.1rem;
+    border-radius: 100px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.solar-btn:hover, .solar-btn.active {
+    background: var(--cyan-glow);
+    color: #030508;
+    border-color: var(--cyan-glow);
+    font-weight: 700;
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+}
+.solar-btn svg { width: 14px; height: 14px; }
+
+/* Target Reticle Indicator */
+.target-reticle {
+    position: fixed;
+    pointer-events: none;
+    width: 60px;
+    height: 60px;
+    border: 1px dashed var(--cyan-glow);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 80;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.2s ease-out;
+}
+.target-reticle.active { opacity: 0.75; }
+
+/* Flight Guide Badge */
+.flight-indicator {
+    position: fixed;
+    bottom: 6.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.55rem 1.25rem;
+    background: rgba(0, 240, 255, 0.12);
+    border: 1px solid var(--cyan-glow);
+    border-radius: 50px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--cyan-glow);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+}
+
+.flight-indicator.active { opacity: 1; }
+
+/* Planet Dock (Bottom Navigation) */
+.planet-dock {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.25rem;
+    background: var(--glass-hud);
+    backdrop-filter: blur(24px);
+    border: 1px solid var(--border-glow);
+    border-radius: 100px;
+    z-index: 100;
+    max-width: 92vw;
+    overflow-x: auto;
+}
+
+.planet-pill {
+    background: transparent;
+    border: none;
+    color: #8E99B0;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+    transition: all 0.25s ease;
+}
+
+.planet-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #8E99B0;
+}
+
+.planet-pill:hover, .planet-pill.active {
+    color: #FFF;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.planet-pill.active .planet-dot {
+    background: var(--cyan-glow);
+    box-shadow: 0 0 10px var(--cyan-glow);
+}
+
+/* Holographic Celestial Telemetry Panel */
+.celestial-card {
+    position: fixed;
+    right: 2.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 400px;
+    background: var(--glass-card);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid var(--border-glow);
+    border-radius: 24px;
+    padding: 2.25rem;
+    z-index: 90;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 240, 255, 0.15);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50%) translateX(40px);
+}
+
+.celestial-card.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(-50%) translateX(0);
+}
+
+.card-tag {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    color: var(--cyan-glow);
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.card-title {
+    font-size: 1.85rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: #FFF;
+}
+
+.card-desc {
+    color: #A0ABC0;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+}
+
+.card-details-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    margin-bottom: 1.75rem;
+}
+
+.card-detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.88rem;
+}
+.card-detail-item svg { color: var(--cyan-glow); width: 18px; height: 18px; margin-top: 2px; }
+
+.card-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.card-btn {
+    padding: 0.65rem 1.25rem;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    transition: all 0.25s ease;
+}
+
+.card-btn-primary {
+    background: var(--cyan-glow);
+    color: #030508;
+    font-weight: 700;
+}
+.card-btn-primary:hover {
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.6);
+    transform: translateY(-2px);
+}
+
+.card-btn-secondary {
+    background: rgba(255, 255, 255, 0.08);
+    color: #FFF;
+    border: 1px solid var(--border-subtle);
+}
+.card-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: var(--cyan-glow);
+}
+
+/* Responsive Rules */
+@media (max-width: 800px) {
+    .celestial-card {
+        right: 1.25rem;
+        left: 1.25rem;
+        width: auto;
+        top: auto;
+        bottom: 6rem;
+        transform: translateY(40px);
+    }
+    .celestial-card.active { transform: translateY(0); }
+    .solar-title-badge { display: none; }
+    .solar-hud-top { padding: 0.6rem 1rem; }
+}

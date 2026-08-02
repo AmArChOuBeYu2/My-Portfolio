@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amar Choubey — Full-Stack Developer & AI Builder</title>
+    <meta name="description" content="Personal Portfolio of Amar Choubey, Software Engineering Student at NIAT, Full-Stack Developer, and AI & Automation Builder.">
+    <meta name="author" content="Amar Choubey">
+    <meta property="og:title" content="Amar Choubey — Developer & AI Builder">
+    <meta property="og:description" content="Building AI-powered applications, scalable web platforms, and automation tools that solve real-world problems.">
+    <meta property="og:type" content="website">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Style -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Three.js & Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body class="light-theme">
+
+    <!-- Zero-Style Preloader -->
+    <div id="preloader" class="preloader">
+        <div class="loader-content">
+            <div class="loader-brand">AMAR CHOUBEY</div>
+            <div class="loader-track">
+                <div id="loader-bar" class="loader-bar"></div>
+            </div>
+            <div class="loader-status">Initializing WebGL Scene & Acoustic Engine... <span id="loader-percent">0%</span></div>
+        </div>
+    </div>
+
+    <!-- 3D Canvas Background -->
+    <div id="canvas-container"></div>
+
+    <!-- Custom Cursor -->
+    <div id="cursor-dot" class="cursor-dot"></div>
+    <div id="cursor-ring" class="cursor-ring"></div>
+
+    <!-- Everest-Style Live Telemetry HUD -->
+    <aside class="telemetry-hud" id="hud">
+        <div class="hud-item brand-badge">
+            <span class="pulse-dot"></span> AC // portfolio
+        </div>
+        <div class="hud-item">
+            <span class="hud-label">ALTITUDE / STAGE:</span>
+            <span id="hud-stage" class="hud-val">01 // HERO</span>
+        </div>
+        <div class="hud-item">
+            <span class="hud-label">SCROLL METRIC:</span>
+            <span id="hud-scroll" class="hud-val">0%</span>
+        </div>
+        <div class="hud-item">
+            <span class="hud-label">3D FPS:</span>
+            <span id="hud-fps" class="hud-val">60</span>
+        </div>
+        <div class="hud-actions">
+            <button id="sound-toggle" class="hud-btn" title="Toggle Ambient Audio">
+                <i data-lucide="volume-2"></i>
+                <span id="sound-state">SOUND OFF</span>
+            </button>
+            <a href="solar.html" class="hud-btn highlight-btn" title="Launch 3D Solar System">
+                <i data-lucide="sun"></i>
+                <span>SOLAR SYSTEM</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content Layout (Single Seamless Scroll) -->
+    <main id="main-content" class="content-wrapper">
+
+        <!-- 1. HERO SECTION -->
+        <section id="hero" class="section hero-section" data-stage="01 // HERO">
+            <div class="container hero-container">
+                <div class="hero-text-block">
+                    <div class="badge-pill">
+                        <span class="badge-status"></span> 2nd Year SE Student @ NIAT
+                    </div>
+                    <h1 class="hero-title">
+                        Amar <span class="text-serif text-accent">Choubey</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Full-Stack Developer & AI & Automation Builder
+                    </p>
+                    <p class="hero-bio">
+                        Building AI-powered applications, scalable web platforms, and automation tools that solve real-world problems. Passionate about turning ambitious ideas into polished products.
+                    </p>
+                    <div class="hero-cta-group">
+                        <a href="#projects" class="btn btn-primary">
+                            <span>Explore Projects</span>
+                            <i data-lucide="arrow-down-right"></i>
+                        </a>
+                        <a href="Amar Choubey Resume.pdf" download target="_blank" class="btn btn-secondary">
+                            <i data-lucide="file-text"></i>
+                            <span>Resume</span>
+                        </a>
+                        <a href="solar.html" class="btn btn-ghost">
+                            <i data-lucide="sun"></i>
+                            <span>Solar System</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hero-visual-card">
+                    <div class="image-frame-container" id="profile-frame">
+                        <img src="My Image.png" alt="Amar Choubey" class="profile-img">
+                        <div class="frame-glass-overlay"></div>
+                        <div class="frame-tag">
+                            <span class="tag-dot"></span> Open to Internships & Projects
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scroll-indicator">
+                <span class="mouse-icon"><span class="wheel"></span></span>
+                <span class="scroll-text">Scroll to Experience</span>
+            </div>
+        </section>
+
+        <!-- 2. ABOUT & PHILOSOPHY SECTION -->
+        <section id="about" class="section about-section" data-stage="02 // ABOUT">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">01 / BACKGROUND</span>
+                    <h2 class="section-title">Bridging Human Needs with <span class="text-serif text-accent">AI Precision</span></h2>
+                </div>
+
+                <div class="about-grid">
+                    <div class="about-card glass-card">
+                        <div class="card-icon"><i data-lucide="graduation-cap"></i></div>
+                        <h3>Education & Focus</h3>
+                        <p>Currently pursuing a Bachelor's in Software Engineering (2nd Year) at <strong>NIAT</strong>. Focused on modern web architectures, state management, and seamless LLM integrations.</p>
+                    </div>
+
+                    <div class="about-card glass-card">
+                        <div class="card-icon"><i data-lucide="cpu"></i></div>
+                        <h3>AI & Automation First</h3>
+                        <p>Specialized in turning complex AI models into intuitive, user-friendly SaaS products—from automated small-business employees to intelligent fact-checkers.</p>
+                    </div>
+
+                    <div class="about-card glass-card">
+                        <div class="card-icon"><i data-lucide="sparkles"></i></div>
+                        <h3>Craft & Aesthetics</h3>
+                        <p>Believer in clean, psychological design: soft organic tones, intuitive user flows, zero visual clutter, and performant 60 FPS experiences.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. SKILLS MATRIX SECTION -->
+        <section id="skills" class="section skills-section" data-stage="03 // SKILLS">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">02 / CAPABILITIES</span>
+                    <h2 class="section-title">Technical <span class="text-serif text-accent">Toolbox</span></h2>
+                    <p class="section-desc">Interactive tech stack powering scalable frontends, resilient backends, and AI pipelines.</p>
+                </div>
+
+                <div class="skills-categories">
+                    <div class="skill-group">
+                        <h4 class="group-title"><i data-lucide="code"></i> Languages & Core</h4>
+                        <div class="skills-flex">
+                            <span class="skill-chip active" data-skill="JavaScript"><i data-lucide="file-code"></i> JavaScript</span>
+                            <span class="skill-chip active" data-skill="TypeScript"><i data-lucide="file-code-2"></i> TypeScript</span>
+                            <span class="skill-chip" data-skill="Python"><i data-lucide="terminal"></i> Python</span>
+                            <span class="skill-chip" data-skill="Java"><i data-lucide="coffee"></i> Java</span>
+                            <span class="skill-chip" data-skill="C++"><i data-lucide="cpu"></i> C++</span>
+                            <span class="skill-chip" data-skill="HTML5 & CSS3"><i data-lucide="layout"></i> HTML5 & CSS3</span>
+                            <span class="skill-chip" data-skill="SQL"><i data-lucide="database"></i> SQL</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-group">
+                        <h4 class="group-title"><i data-lucide="layers"></i> Frameworks & Web Platforms</h4>
+                        <div class="skills-flex">
+                            <span class="skill-chip active" data-skill="React"><i data-lucide="atom"></i> React</span>
+                            <span class="skill-chip active" data-skill="Next.js"><i data-lucide="globe"></i> Next.js</span>
+                            <span class="skill-chip active" data-skill="Node.js"><i data-lucide="server"></i> Node.js</span>
+                            <span class="skill-chip" data-skill="Tailwind CSS"><i data-lucide="palette"></i> Tailwind CSS</span>
+                            <span class="skill-chip" data-skill="REST APIs"><i data-lucide="arrow-left-right"></i> REST APIs</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-group">
+                        <h4 class="group-title"><i data-lucide="bot"></i> AI, Cloud & Infrastructure</h4>
+                        <div class="skills-flex">
+                            <span class="skill-chip active" data-skill="AI Integration"><i data-lucide="brain-circuit"></i> AI Integration</span>
+                            <span class="skill-chip active" data-skill="Supabase"><i data-lucide="database"></i> Supabase</span>
+                            <span class="skill-chip" data-skill="MongoDB"><i data-lucide="hard-drive"></i> MongoDB</span>
+                            <span class="skill-chip" data-skill="Docker"><i data-lucide="container"></i> Docker</span>
+                            <span class="skill-chip" data-skill="Git & GitHub"><i data-lucide="git-branch"></i> Git & GitHub</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. FEATURED PROJECTS SECTION -->
+        <section id="projects" class="section projects-section" data-stage="04 // PROJECTS">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">03 / SHOWCASE</span>
+                    <h2 class="section-title">Featured <span class="text-serif text-accent">Creation & Products</span></h2>
+                    <p class="section-desc">Inspect and launch live demos of real-world AI applications and platforms.</p>
+                </div>
+
+                <div class="projects-deck" id="projects-deck">
+
+                    <!-- Project 1: Anchor (Featured) -->
+                    <article class="project-card glass-card featured-project" data-project="anchor">
+                        <div class="card-badge"><i data-lucide="star"></i> FEATURED AI PRODUCT</div>
+                        <div class="card-content">
+                            <h3 class="project-title">Anchor — AI Employee for Small Businesses</h3>
+                            <p class="project-desc">
+                                An intelligent business assistant empowering small enterprises to automate customer support, reservation bookings, FAQs, and daily operations. Includes an active admin dashboard for real-time analytics.
+                            </p>
+                            <div class="project-tags">
+                                <span>Next.js</span>
+                                <span>React</span>
+                                <span>TypeScript</span>
+                                <span>Tailwind CSS</span>
+                                <span>AI APIs</span>
+                                <span>Vercel</span>
+                            </div>
+                            <div class="project-actions">
+                                <a href="https://anchor-fawn-tau.vercel.app/" target="_blank" rel="noopener" class="btn btn-sm btn-primary">
+                                    <span>Launch Live App</span>
+                                    <i data-lucide="external-link"></i>
+                                </a>
+                                <a href="https://anchor-fawn-tau.vercel.app/dashboard" target="_blank" rel="noopener" class="btn btn-sm btn-secondary">
+                                    <span>Admin Dashboard</span>
+                                    <i data-lucide="layout-dashboard"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 2: Satyafy -->
+                    <article class="project-card glass-card" data-project="satyafy">
+                        <div class="card-badge"><i data-lucide="shield-check"></i> AI FACT-CHECKER</div>
+                        <div class="card-content">
+                            <h3 class="project-title">Satyafy</h3>
+                            <p class="project-desc">
+                                An AI-powered truth verification platform that scans news articles, social media posts, and external URLs to detect misinformation, score credibility, and explain bias contextually.
+                            </p>
+                            <div class="project-tags">
+                                <span>Next.js</span>
+                                <span>AI APIs</span>
+                                <span>REST APIs</span>
+                                <span>Tailwind CSS</span>
+                            </div>
+                            <div class="project-actions">
+                                <a href="https://github.com/AmArChOuBeYu2" target="_blank" rel="noopener" class="btn btn-sm btn-outline">
+                                    <span>View Repository</span>
+                                    <i data-lucide="github"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 3: Kisan Saathi -->
+                    <article class="project-card glass-card" data-project="kisan-saathi">
+                        <div class="card-badge"><i data-lucide="sprout"></i> SMART AGRICULTURE</div>
+                        <div class="card-content">
+                            <h3 class="project-title">Kisan Saathi</h3>
+                            <p class="project-desc">
+                                Smart agricultural assistant built for farmers. Features AI Computer Vision to detect crop diseases from camera scans, real-time localized weather telemetry, and soil health guidance.
+                            </p>
+                            <div class="project-tags">
+                                <span>AI Vision</span>
+                                <span>Weather APIs</span>
+                                <span>React</span>
+                                <span>Supabase</span>
+                            </div>
+                            <div class="project-actions">
+                                <a href="https://github.com/AmArChOuBeYu2" target="_blank" rel="noopener" class="btn btn-sm btn-outline">
+                                    <span>View Repository</span>
+                                    <i data-lucide="github"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 4: Interactive 3D Portfolio -->
+                    <article class="project-card glass-card" data-project="portfolio">
+                        <div class="card-badge"><i data-lucide="box"></i> 3D / 2D EXPERIENCE</div>
+                        <div class="card-content">
+                            <h3 class="project-title">Interactive 3D Portfolio</h3>
+                            <p class="project-desc">
+                                A high-performance, calm, human-centric developer portfolio blending Three.js WebGL spatial physics, acoustic audio synthesis, and smooth inertia scrolling.
+                            </p>
+                            <div class="project-tags">
+                                <span>Three.js</span>
+                                <span>WebGL</span>
+                                <span>Vanilla JS</span>
+                                <span>Web Audio API</span>
+                            </div>
+                            <div class="project-actions">
+                                <a href="https://github.com/AmArChOuBeYu2" target="_blank" rel="noopener" class="btn btn-sm btn-outline">
+                                    <span>GitHub Profile</span>
+                                    <i data-lucide="github"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. SOLAR SYSTEM LAUNCH CTA SECTION -->
+        <section id="solar-cta" class="section solar-cta-section" data-stage="05 // SOLAR SYSTEM">
+            <div class="container">
+                <div class="solar-banner glass-card">
+                    <div class="solar-banner-content">
+                        <span class="section-tag">04 / 3D EXPEDITION</span>
+                        <h2 class="section-title">Ready for <span class="text-serif text-accent">Deep Space?</span></h2>
+                        <p class="solar-banner-desc">
+                            Step into an interactive 3D Solar System. Orbit planets, inspect celestial portfolio modules, or fly freely across the galaxy.
+                        </p>
+                        <a href="solar.html" class="btn btn-primary btn-lg solar-launch-btn">
+                            <i data-lucide="sun"></i>
+                            <span>Solar System</span>
+                            <i data-lucide="arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. CONTACT & FOOTER SECTION -->
+        <section id="contact" class="section contact-section" data-stage="06 // CONTACT">
+            <div class="container">
+                <div class="contact-card glass-card">
+                    <div class="contact-header">
+                        <span class="section-tag">05 / GET IN TOUCH</span>
+                        <h2 class="section-title">Let’s Build Something <span class="text-serif text-accent">Extraordinary</span></h2>
+                        <p class="contact-text">
+                            Whether you're looking for a full-stack engineer, an AI integration specialist, or an ambitious teammate for internships and projects—my inbox is always open.
+                        </p>
+                    </div>
+
+                    <div class="contact-details">
+                        <a href="mailto:sc62970@gmail.com" class="contact-item">
+                            <i data-lucide="mail"></i>
+                            <div>
+                                <span class="item-label">EMAIL ADDRESS</span>
+                                <span class="item-val">sc62970@gmail.com</span>
+                            </div>
+                        </a>
+
+                        <a href="tel:7096093039" class="contact-item">
+                            <i data-lucide="phone"></i>
+                            <div>
+                                <span class="item-label">PHONE</span>
+                                <span class="item-val">+91 7096093039</span>
+                            </div>
+                        </a>
+
+                        <a href="https://github.com/AmArChOuBeYu2" target="_blank" rel="noopener" class="contact-item">
+                            <i data-lucide="github"></i>
+                            <div>
+                                <span class="item-label">GITHUB</span>
+                                <span class="item-val">@AmArChOuBeYu2</span>
+                            </div>
+                        </a>
+
+                        <a href="https://www.linkedin.com/in/amar-choubey/" target="_blank" rel="noopener" class="contact-item">
+                            <i data-lucide="linkedin"></i>
+                            <div>
+                                <span class="item-label">LINKEDIN</span>
+                                <span class="item-val">Amar Choubey</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="contact-actions">
+                        <a href="mailto:sc62970@gmail.com" class="btn btn-primary btn-lg">
+                            <i data-lucide="send"></i>
+                            <span>Send Direct Email</span>
+                        </a>
+                        <a href="Amar Choubey Resume.pdf" download target="_blank" class="btn btn-secondary btn-lg">
+                            <i data-lucide="download"></i>
+                            <span>Download PDF Resume</span>
+                        </a>
+                    </div>
+                </div>
+
+                <footer class="footer">
+                    <p>© 2026 Amar Choubey. Designed & Engineered with calm aesthetics and Three.js.</p>
+                </footer>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Application Script Modules -->
+    <script src="js/audio.js"></script>
+    <script src="js/world.js"></script>
+    <script src="js/interactions.js"></script>
+    <script src="js/app.js"></script>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>

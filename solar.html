@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar System — Amar Choubey</title>
+    <meta name="description" content="Production-quality 3D Solar System simulation showcasing Amar Choubey's skills, projects, and contact hubs across celestial orbits.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/solar.css">
+
+    <!-- Three.js Engine & Controls -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+
+    <!-- NASA Loading Screen -->
+    <div id="nasa-preloader" class="nasa-preloader">
+        <div class="loader-box">
+            <div class="nasa-logo-badge">
+                <i data-lucide="space"></i> NASA TELEMETRY SIMULATION
+            </div>
+            <h1 class="loader-title">Solar System Expedition</h1>
+            <div class="rocket-track">
+                <div id="rocket-bar" class="rocket-bar"></div>
+            </div>
+            <div class="rocket-telemetry">
+                <span>Procedural Shaders & Audio...</span>
+                <span id="rocket-percent">0%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3D WebGL Canvas -->
+    <div id="solar-canvas"></div>
+
+    <!-- Target Reticle Overlay -->
+    <div id="target-reticle" class="target-reticle"></div>
+
+    <!-- Solar Top HUD -->
+    <header class="solar-hud-top">
+        <a href="index.html" class="brand-link">
+            <i data-lucide="arrow-left"></i>
+            <span>MAIN PORTFOLIO</span>
+        </a>
+
+        <div class="solar-title-badge">Solar System</div>
+
+        <div class="solar-controls">
+            <button id="flight-toggle" class="solar-btn">
+                <i data-lucide="navigation"></i>
+                <span id="flight-text">WASD FREE FLIGHT</span>
+            </button>
+            <button id="audio-toggle" class="solar-btn">
+                <i data-lucide="volume-2"></i>
+                <span id="audio-text">SOUND OFF</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Free Flight Indicator Badge -->
+    <div id="flight-guide" class="flight-indicator">
+        <i data-lucide="gamepad-2"></i>
+        <span>WASD / Arrows = Fly | Space = Up | Shift = Down | Click & Drag = Look Around</span>
+    </div>
+
+    <!-- Planet Selection Dock -->
+    <nav class="planet-dock" id="planet-dock">
+        <button class="planet-pill active" data-planet="sun">
+            <span class="planet-dot"></span> Sun
+        </button>
+        <button class="planet-pill" data-planet="mercury">
+            <span class="planet-dot"></span> Mercury
+        </button>
+        <button class="planet-pill" data-planet="venus">
+            <span class="planet-dot"></span> Venus
+        </button>
+        <button class="planet-pill" data-planet="earth">
+            <span class="planet-dot"></span> Earth (Socials)
+        </button>
+        <button class="planet-pill" data-planet="mars">
+            <span class="planet-dot"></span> Mars
+        </button>
+        <button class="planet-pill" data-planet="jupiter">
+            <span class="planet-dot"></span> Jupiter
+        </button>
+        <button class="planet-pill" data-planet="saturn">
+            <span class="planet-dot"></span> Saturn
+        </button>
+        <button class="planet-pill" data-planet="uranus">
+            <span class="planet-dot"></span> Uranus
+        </button>
+        <button class="planet-pill" data-planet="neptune">
+            <span class="planet-dot"></span> Neptune
+        </button>
+    </nav>
+
+    <!-- Celestial Information Card Panel -->
+    <aside id="celestial-card" class="celestial-card">
+        <span id="card-tag" class="card-tag">CELESTIAL HUB // SUN</span>
+        <h2 id="card-title" class="card-title">Amar Choubey</h2>
+        <p id="card-desc" class="card-desc">
+            Full-Stack Developer & AI & Automation Builder. 2nd Year Software Engineering Student @ NIAT.
+        </p>
+        <div id="card-details" class="card-details-grid">
+            <!-- Dynamic Details -->
+        </div>
+        <div id="card-actions" class="card-actions">
+            <!-- Dynamic Buttons -->
+        </div>
+    </aside>
+
+    <!-- Audio Script Engine -->
+    <script src="js/audio.js"></script>
+
+    <!-- Solar 3D Engine -->
+    <script src="js/solar.js"></script>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
