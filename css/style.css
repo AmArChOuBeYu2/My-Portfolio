@@ -163,20 +163,20 @@ body:hover .cursor-dot { opacity: 1; }
 /* Everest-Style Telemetry HUD */
 .telemetry-hud {
     position: fixed;
-    top: 1.5rem;
+    top: 1.25rem;
     left: 1.5rem;
     right: 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.75rem 1.25rem;
-    background: var(--bg-glass);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--border-subtle);
+    padding: 0.6rem 1.25rem;
+    background: rgba(247, 246, 242, 0.85);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(27, 28, 30, 0.08);
     border-radius: 100px;
     z-index: 1000;
-    box-shadow: var(--shadow-soft);
+    box-shadow: 0 10px 30px -10px rgba(27, 28, 30, 0.06);
 }
 
 .hud-item {
@@ -198,14 +198,13 @@ body:hover .cursor-dot { opacity: 1; }
     height: 8px;
     border-radius: 50%;
     background-color: var(--accent-sage);
-    box-shadow: 0 0 10px var(--accent-sage);
-    animation: pulse 2s infinite;
+    box-shadow: 0 0 0 3px rgba(91, 124, 97, 0.2);
+    animation: pulse 2s infinite ease-in-out;
 }
 
 @keyframes pulse {
-    0% { transform: scale(0.95); opacity: 0.8; }
-    50% { transform: scale(1.2); opacity: 1; }
-    100% { transform: scale(0.95); opacity: 0.8; }
+    0%, 100% { transform: scale(1); opacity: 0.85; }
+    50% { transform: scale(1.15); opacity: 1; }
 }
 
 .hud-label { color: var(--text-muted); font-size: 0.7rem; }
@@ -248,7 +247,7 @@ body:hover .cursor-dot { opacity: 1; }
 }
 
 .section {
-    padding: 7rem 0;
+    padding: 6.5rem 0;
     position: relative;
 }
 
@@ -256,7 +255,7 @@ body:hover .cursor-dot { opacity: 1; }
 .text-accent { color: var(--accent-terracotta); }
 
 .section-header {
-    margin-bottom: 3.5rem;
+    margin-bottom: 3rem;
 }
 
 .section-tag {
@@ -269,17 +268,17 @@ body:hover .cursor-dot { opacity: 1; }
 }
 
 .section-title {
-    font-size: 2.5rem;
+    font-size: 2.4rem;
     font-weight: 600;
     letter-spacing: -0.02em;
     color: var(--text-primary);
-    line-height: 1.2;
+    line-height: 1.25;
 }
 
 .section-desc {
     color: var(--text-secondary);
-    font-size: 1.05rem;
-    margin-top: 0.75rem;
+    font-size: 1rem;
+    margin-top: 0.6rem;
 }
 
 /* Glass Card Component */
@@ -306,10 +305,10 @@ body:hover .cursor-dot { opacity: 1; }
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.85rem 1.6rem;
+    padding: 0.8rem 1.5rem;
     border-radius: 100px;
     font-weight: 500;
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     text-decoration: none;
     cursor: pointer;
     border: 1px solid transparent;
@@ -324,7 +323,7 @@ body:hover .cursor-dot { opacity: 1; }
 }
 .btn-primary:hover {
     background-color: var(--accent-terracotta-hover);
-    box-shadow: 0 10px 25px rgba(200, 106, 75, 0.3);
+    box-shadow: 0 8px 22px rgba(200, 106, 75, 0.22);
     transform: translateY(-2px);
 }
 
@@ -334,18 +333,19 @@ body:hover .cursor-dot { opacity: 1; }
 }
 .btn-secondary:hover {
     background-color: var(--accent-sage-light);
-    box-shadow: 0 10px 25px rgba(91, 124, 97, 0.3);
+    box-shadow: 0 8px 22px rgba(91, 124, 97, 0.22);
     transform: translateY(-2px);
 }
 
 .btn-ghost {
     background: transparent;
     color: var(--text-primary);
-    border-color: var(--border-subtle);
+    border-color: transparent;
 }
 .btn-ghost:hover {
-    background: rgba(27, 28, 30, 0.04);
-    border-color: var(--text-primary);
+    background: rgba(27, 28, 30, 0.05);
+    color: var(--accent-terracotta);
+    transform: translateY(-2px);
 }
 
 .btn-outline {
@@ -356,6 +356,8 @@ body:hover .cursor-dot { opacity: 1; }
 .btn-outline:hover {
     border-color: var(--accent-sage);
     color: var(--accent-sage);
+    background: rgba(91, 124, 97, 0.05);
+    transform: translateY(-2px);
 }
 
 .btn-sm {
