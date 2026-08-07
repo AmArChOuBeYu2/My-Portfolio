@@ -7,7 +7,7 @@ class World3D {
         this.container = document.getElementById('canvas-container');
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-        this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
 
         this.objects = [];
         this.whisperNodes = [];
@@ -24,9 +24,9 @@ class World3D {
     }
 
     init() {
-        // Renderer setup
+        // High-performance renderer setup
         this.renderer.setSize(window.innerWidth, window.innerHeight);
-        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
         this.renderer.shadowMap.enabled = true;
         this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         this.container.appendChild(this.renderer.domElement);
@@ -41,8 +41,11 @@ class World3D {
         const dirLight = new THREE.DirectionalLight(0xFFF8EE, 1.1);
         dirLight.position.set(10, 15, 10);
         dirLight.castShadow = true;
-        dirLight.shadow.mapSize.width = 2048;
-        dirLight.shadow.mapSize.height = 2048;
+        dirLight.shadow.mapSize.width = 1024;
+        dirLight.shadow.mapSize.height = 1024;
+        dirLight.shadow.camera.near = 0.5;
+        dirLight.shadow.camera.far = 30;
+        dirLight.shadow.bias = -0.0005;
         this.scene.add(dirLight);
 
         const fillLight = new THREE.PointLight(0x5B7C61, 0.6, 20); // Sage fill light
@@ -183,6 +186,8 @@ class World3D {
         ctx.fillText(`"${message}"`, 40, 140);
 
         const texture = new THREE.CanvasTexture(canvas);
+        texture.generateMipmaps = false;
+        texture.minFilter = THREE.LinearFilter;
         const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true });
         const sprite = new THREE.Sprite(spriteMat);
 

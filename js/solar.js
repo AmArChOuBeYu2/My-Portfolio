@@ -8,7 +8,7 @@ class SolarSystem {
         this.container = document.getElementById('solar-canvas');
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 3500);
-        this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
 
         this.controls = null;
         this.planets = {};
@@ -40,9 +40,9 @@ class SolarSystem {
             document.body.classList.add('loaded');
         });
 
-        // Renderer setup
+        // High-performance renderer setup
         this.renderer.setSize(window.innerWidth, window.innerHeight);
-        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
         this.renderer.shadowMap.enabled = true;
         this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         this.container.appendChild(this.renderer.domElement);
@@ -60,10 +60,13 @@ class SolarSystem {
         const ambientLight = new THREE.AmbientLight(0x222238, 0.95);
         this.scene.add(ambientLight);
 
-        // Sun Point Light
+        // Sun Point Light (Optimized Shadow Map)
         this.sunLight = new THREE.PointLight(0xFFF3E0, 3.5, 600);
         this.sunLight.position.set(0, 0, 0);
         this.sunLight.castShadow = true;
+        this.sunLight.shadow.mapSize.width = 1024;
+        this.sunLight.shadow.mapSize.height = 1024;
+        this.sunLight.shadow.bias = -0.0005;
         this.scene.add(this.sunLight);
 
         // Build Environment & Celestial Objects
@@ -278,7 +281,7 @@ class SolarSystem {
             if (cfg.isEarth) matProps.map = this.generateProceduralTexture('earth');
             if (cfg.isMars) matProps.map = this.generateProceduralTexture('mars');
 
-            const geom = new THREE.SphereGeometry(cfg.size, 64, 64);
+            const geom = new THREE.SphereGeometry(cfg.size, 32, 32);
             const mat = new THREE.MeshStandardMaterial(matProps);
 
             const mesh = new THREE.Mesh(geom, mat);
@@ -318,7 +321,7 @@ class SolarSystem {
 
             // Saturn Rings
             if (cfg.isSaturn) {
-                const ringGeom = new THREE.RingGeometry(cfg.size * 1.4, cfg.size * 2.5, 64);
+                const ringGeom = new THREE.RingGeometry(cfg.size * 1.4, cfg.size * 2.5, 32);
                 const ringMat = new THREE.MeshBasicMaterial({
                     color: 0xD4B28C,
                     side: THREE.DoubleSide,
@@ -347,14 +350,17 @@ class SolarSystem {
         const asteroidCount = 480;
         const asteroidGroup = new THREE.Group();
 
+        // Optimized Shared Geometry & Material to eliminate 480 WebGL allocations
+        const sharedGeom = new THREE.DodecahedronGeometry(1, 0);
+        const sharedMat = new THREE.MeshStandardMaterial({ color: 0x666666, roughness: 0.9 });
+
         for (let i = 0; i < asteroidCount; i++) {
             const dist = 27 + Math.random() * 4;
             const angle = Math.random() * Math.PI * 2;
             const size = 0.06 + Math.random() * 0.16;
 
-            const geom = new THREE.DodecahedronGeometry(size, 0);
-            const mat = new THREE.MeshStandardMaterial({ color: 0x666666, roughness: 0.9 });
-            const mesh = new THREE.Mesh(geom, mat);
+            const mesh = new THREE.Mesh(sharedGeom, sharedMat);
+            mesh.scale.set(size, size, size);
 
             mesh.position.x = Math.cos(angle) * dist;
             mesh.position.y = (Math.random() - 0.5) * 1.8;
