@@ -44,10 +44,16 @@
                 <i data-lucide="navigation"></i>
                 <span id="flight-text">WASD FREE FLIGHT</span>
             </button>
-            <button id="audio-toggle" class="solar-btn">
-                <i data-lucide="volume-2"></i>
-                <span id="audio-text">SOUND OFF</span>
-            </button>
+            <div class="solar-audio-control">
+                <button id="audio-toggle" class="solar-btn" title="Toggle Oppenheimer Audio">
+                    <i data-lucide="volume-2"></i>
+                    <span id="audio-text">SOUND OFF</span>
+                </button>
+                <div class="volume-slider-wrap" title="Sound Intensity / Volume">
+                    <i data-lucide="volume-1" class="vol-icon"></i>
+                    <input type="range" id="solar-volume" class="volume-slider" min="0" max="1" step="0.01" value="0.7" aria-label="Sound Intensity">
+                </div>
+            </div>
         </div>
     </header>
 

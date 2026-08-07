@@ -10,6 +10,7 @@ class SoundEngine {
         this.masterGain = null;
         this.organOscillators = [];
         this.interstellarInterval = null;
+        this.volume = 0.5;
     }
 
     init() {
@@ -18,8 +19,15 @@ class SoundEngine {
         this.ctx = new AudioContext();
 
         this.masterGain = this.ctx.createGain();
-        this.masterGain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+        this.masterGain.gain.setValueAtTime(this.volume * 0.2, this.ctx.currentTime);
         this.masterGain.connect(this.ctx.destination);
+    }
+
+    setVolume(vol) {
+        this.volume = Math.max(0, Math.min(1, vol));
+        if (this.masterGain && this.ctx) {
+            this.masterGain.gain.setValueAtTime(this.volume * 0.2, this.ctx.currentTime);
+        }
     }
 
     async play() {

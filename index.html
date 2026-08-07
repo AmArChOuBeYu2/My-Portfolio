@@ -57,6 +57,16 @@
             <span id="hud-fps" class="hud-val">60</span>
         </div>
         <div class="hud-actions">
+            <div class="hud-audio-control">
+                <button id="sound-toggle" class="hud-btn" title="Toggle Ambient Organ Audio" aria-label="Toggle Ambient Audio">
+                    <i data-lucide="volume-2"></i>
+                    <span id="sound-state">SOUND OFF</span>
+                </button>
+                <div class="volume-slider-wrap" title="Sound Intensity / Volume">
+                    <i data-lucide="volume-1" class="vol-icon"></i>
+                    <input type="range" id="sound-volume" class="volume-slider" min="0" max="1" step="0.01" value="0.5" aria-label="Sound Intensity">
+                </div>
+            </div>
             <a href="solar.html" class="hud-btn highlight-btn" title="Launch 3D Solar System">
                 <i data-lucide="sun"></i>
                 <span>SOLAR SYSTEM</span>

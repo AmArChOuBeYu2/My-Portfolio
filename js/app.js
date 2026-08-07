@@ -63,14 +63,29 @@ function initScrollTelemetry() {
 function initHUDControls() {
     const soundBtn = document.getElementById('sound-toggle');
     const soundState = document.getElementById('sound-state');
-    const cameraResetBtn = document.getElementById('camera-reset');
-    const spawnNodeBtn = document.getElementById('spawn-node');
+    const soundVolume = document.getElementById('sound-volume');
 
     if (soundBtn) {
-        soundBtn.addEventListener('click', () => {
-            if (window.soundEngine) {
-                const active = window.soundEngine.toggle();
-                if (soundState) soundState.innerText = active ? 'SOUND ON' : 'SOUND OFF';
+        soundBtn.addEventListener('click', async () => {
+            const targetAudio = window.audio || window.soundEngine;
+            if (targetAudio) {
+                if (targetAudio.isPlaying) {
+                    targetAudio.pause();
+                    if (soundState) soundState.innerText = 'SOUND OFF';
+                } else {
+                    const success = await targetAudio.play();
+                    if (success && soundState) soundState.innerText = 'SOUND ON';
+                }
+            }
+        });
+    }
+
+    if (soundVolume) {
+        soundVolume.addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value);
+            const targetAudio = window.audio || window.soundEngine;
+            if (targetAudio && typeof targetAudio.setVolume === 'function') {
+                targetAudio.setVolume(val);
             }
         });
     }

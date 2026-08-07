@@ -3,6 +3,49 @@
    Selection Glow Aura, Comets, Black Hole Easter Egg, Procedural Shaders, WASD
    ========================================================================== */
 
+class SolarAudioTrack {
+    constructor(src) {
+        this.audio = new Audio(src);
+        this.audio.loop = true;
+        this.audio.volume = 0.7;
+        this.isPlaying = false;
+    }
+
+    async play() {
+        try {
+            await this.audio.play();
+            this.isPlaying = true;
+            return true;
+        } catch (err) {
+            console.warn('Solar audio play blocked or failed:', err);
+            return false;
+        }
+    }
+
+    pause() {
+        this.audio.pause();
+        this.isPlaying = false;
+    }
+
+    stop() {
+        this.pause();
+        this.audio.currentTime = 0;
+    }
+
+    setVolume(vol) {
+        this.audio.volume = Math.max(0, Math.min(1, vol));
+    }
+
+    toggle() {
+        if (this.isPlaying) {
+            this.pause();
+        } else {
+            this.play();
+        }
+        return this.isPlaying;
+    }
+}
+
 class SolarSystem {
     constructor() {
         this.container = document.getElementById('solar-canvas');
@@ -718,6 +761,10 @@ class SolarSystem {
 
     initSolarAudioController() {
         const audioText = document.getElementById('audio-text');
+        const solarVolume = document.getElementById('solar-volume');
+
+        // Instantiate Oppenheimer soundtrack audio
+        this.solarAudio = new SolarAudioTrack('Ludwig_G_ransson_-_Can_You_Hear_The_Music_Oppenheimer_Ost_(MP3.cc).mp3');
 
         // One-time mousemove handler to comply with browser user-interaction policies
         this.firstMouseMoveHandler = async () => {
@@ -727,9 +774,8 @@ class SolarSystem {
             }
 
             try {
-                const targetAudio = window.audio || window.soundEngine;
-                if (targetAudio) {
-                    const played = await targetAudio.play();
+                if (this.solarAudio) {
+                    const played = await this.solarAudio.play();
                     if (played && audioText) {
                         audioText.innerText = 'SOUND ON';
                     }
@@ -742,15 +788,24 @@ class SolarSystem {
         // Add one-time mousemove listener
         window.addEventListener('mousemove', this.firstMouseMoveHandler, { once: true });
 
+        // Volume slider listener for sound intensity
+        if (solarVolume) {
+            solarVolume.addEventListener('input', (e) => {
+                const val = parseFloat(e.target.value);
+                if (this.solarAudio) {
+                    this.solarAudio.setVolume(val);
+                }
+            });
+        }
+
         // Exit / Cleanup handler when leaving Solar System page
         this.pageUnloadHandler = () => {
             if (this.firstMouseMoveHandler) {
                 window.removeEventListener('mousemove', this.firstMouseMoveHandler);
                 this.firstMouseMoveHandler = null;
             }
-            const targetAudio = window.audio || window.soundEngine;
-            if (targetAudio) {
-                targetAudio.stop();
+            if (this.solarAudio) {
+                this.solarAudio.stop();
             }
         };
 
@@ -769,13 +824,12 @@ class SolarSystem {
 
         if (audioBtn) {
             audioBtn.addEventListener('click', async () => {
-                const targetAudio = window.audio || window.soundEngine;
-                if (targetAudio) {
-                    if (targetAudio.isPlaying) {
-                        targetAudio.pause();
+                if (this.solarAudio) {
+                    if (this.solarAudio.isPlaying) {
+                        this.solarAudio.pause();
                         if (audioText) audioText.innerText = 'SOUND OFF';
                     } else {
-                        const success = await targetAudio.play();
+                        const success = await this.solarAudio.play();
                         if (success && audioText) audioText.innerText = 'SOUND ON';
                     }
                 }

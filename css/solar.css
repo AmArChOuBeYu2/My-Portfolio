@@ -194,6 +194,41 @@ body.loaded {
 }
 .solar-btn svg { width: 14px; height: 14px; }
 
+/* Solar HUD Volume Control */
+.solar-audio-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.solar-audio-control .volume-slider-wrap {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 0.35rem 0.65rem;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: all 0.3s ease;
+}
+
+.solar-audio-control .volume-slider-wrap:hover {
+    border-color: var(--cyan-glow);
+    background: rgba(0, 240, 255, 0.08);
+}
+
+.solar-audio-control .vol-icon {
+    color: var(--cyan-glow);
+}
+
+.solar-audio-control .volume-slider {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.solar-audio-control .volume-slider::-webkit-slider-thumb {
+    background: var(--cyan-glow);
+}
+
 /* Target Reticle Indicator */
 .target-reticle {
     position: fixed;
