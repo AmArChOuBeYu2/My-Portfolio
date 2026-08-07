@@ -22,21 +22,49 @@ class SoundEngine {
         this.masterGain.connect(this.ctx.destination);
     }
 
-    toggle() {
-        if (!this.ctx) this.init();
-
-        if (this.ctx.state === 'suspended') {
-            this.ctx.resume();
+    async play() {
+        try {
+            if (!this.ctx) this.init();
+            if (this.ctx && this.ctx.state === 'suspended') {
+                await this.ctx.resume();
+            }
+            if (!this.isPlaying) {
+                this.startInterstellar();
+                this.isPlaying = true;
+            }
+            return true;
+        } catch (err) {
+            console.warn('Audio playback prevented or failed:', err);
+            return false;
         }
+    }
 
+    pause() {
         if (this.isPlaying) {
             this.stopInterstellar();
             this.isPlaying = false;
-        } else {
-            this.startInterstellar();
-            this.isPlaying = true;
         }
+        if (this.ctx && this.ctx.state === 'running') {
+            try {
+                this.ctx.suspend();
+            } catch (e) {}
+        }
+    }
 
+    stop() {
+        this.pause();
+    }
+
+    reset() {
+        this.stop();
+    }
+
+    toggle() {
+        if (this.isPlaying) {
+            this.pause();
+        } else {
+            this.play();
+        }
         return this.isPlaying;
     }
 
@@ -120,3 +148,4 @@ class SoundEngine {
 }
 
 window.soundEngine = new SoundEngine();
+window.audio = window.soundEngine;

@@ -78,6 +78,9 @@ class SolarSystem {
         this.createComet();
         this.createBlackHoleEasterEgg();
 
+        // Audio & Telemetry Controller
+        this.initSolarAudioController();
+
         // Event Listeners
         window.addEventListener('resize', () => this.onWindowResize());
         window.addEventListener('click', (e) => this.onPlanetClick(e));
@@ -713,6 +716,48 @@ class SolarSystem {
         });
     }
 
+    initSolarAudioController() {
+        const audioText = document.getElementById('audio-text');
+
+        // One-time mousemove handler to comply with browser user-interaction policies
+        this.firstMouseMoveHandler = async () => {
+            if (this.firstMouseMoveHandler) {
+                window.removeEventListener('mousemove', this.firstMouseMoveHandler);
+                this.firstMouseMoveHandler = null;
+            }
+
+            try {
+                const targetAudio = window.audio || window.soundEngine;
+                if (targetAudio) {
+                    const played = await targetAudio.play();
+                    if (played && audioText) {
+                        audioText.innerText = 'SOUND ON';
+                    }
+                }
+            } catch (err) {
+                console.warn('Autoplay on mousemove failed:', err);
+            }
+        };
+
+        // Add one-time mousemove listener
+        window.addEventListener('mousemove', this.firstMouseMoveHandler, { once: true });
+
+        // Exit / Cleanup handler when leaving Solar System page
+        this.pageUnloadHandler = () => {
+            if (this.firstMouseMoveHandler) {
+                window.removeEventListener('mousemove', this.firstMouseMoveHandler);
+                this.firstMouseMoveHandler = null;
+            }
+            const targetAudio = window.audio || window.soundEngine;
+            if (targetAudio) {
+                targetAudio.stop();
+            }
+        };
+
+        window.addEventListener('beforeunload', this.pageUnloadHandler);
+        window.addEventListener('pagehide', this.pageUnloadHandler);
+    }
+
     setupHUDListeners() {
         const flightBtn = document.getElementById('flight-toggle');
         const audioBtn = document.getElementById('audio-toggle');
@@ -723,10 +768,16 @@ class SolarSystem {
         }
 
         if (audioBtn) {
-            audioBtn.addEventListener('click', () => {
-                if (window.soundEngine) {
-                    const active = window.soundEngine.toggle();
-                    if (audioText) audioText.innerText = active ? 'SOUND ON' : 'SOUND OFF';
+            audioBtn.addEventListener('click', async () => {
+                const targetAudio = window.audio || window.soundEngine;
+                if (targetAudio) {
+                    if (targetAudio.isPlaying) {
+                        targetAudio.pause();
+                        if (audioText) audioText.innerText = 'SOUND OFF';
+                    } else {
+                        const success = await targetAudio.play();
+                        if (success && audioText) audioText.innerText = 'SOUND ON';
+                    }
                 }
             });
         }
