@@ -3,31 +3,13 @@
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-    initPreloader();
+    // Instant smooth page reveal
+    requestAnimationFrame(() => {
+        document.body.classList.add('loaded');
+    });
     initScrollTelemetry();
     initHUDControls();
 });
-
-// Preloader Progress & Dismissal
-function initPreloader() {
-    const preloader = document.getElementById('preloader');
-    const loaderBar = document.getElementById('loader-bar');
-    const loaderPercent = document.getElementById('loader-percent');
-
-    let progress = 0;
-    const interval = setInterval(() => {
-        progress += Math.floor(Math.random() * 15) + 5;
-        if (progress >= 100) {
-            progress = 100;
-            clearInterval(interval);
-            setTimeout(() => {
-                if (preloader) preloader.classList.add('hidden');
-            }, 300);
-        }
-        if (loaderBar) loaderBar.style.width = `${progress}%`;
-        if (loaderPercent) loaderPercent.innerText = `${progress}%`;
-    }, 60);
-}
 
 // Scroll Telemetry & Stage Sync
 function initScrollTelemetry() {

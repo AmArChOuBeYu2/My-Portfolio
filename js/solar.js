@@ -35,8 +35,10 @@ class SolarSystem {
     }
 
     init() {
-        // Preloader
-        this.initPreloader();
+        // Instant smooth page reveal
+        requestAnimationFrame(() => {
+            document.body.classList.add('loaded');
+        });
 
         // Renderer setup
         this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -89,26 +91,6 @@ class SolarSystem {
 
         // Start render loop
         this.animate();
-    }
-
-    initPreloader() {
-        const preloader = document.getElementById('nasa-preloader');
-        const rocketBar = document.getElementById('rocket-bar');
-        const rocketPercent = document.getElementById('rocket-percent');
-
-        let progress = 0;
-        const interval = setInterval(() => {
-            progress += Math.floor(Math.random() * 15) + 8;
-            if (progress >= 100) {
-                progress = 100;
-                clearInterval(interval);
-                setTimeout(() => {
-                    if (preloader) preloader.classList.add('hidden');
-                }, 350);
-            }
-            if (rocketBar) rocketBar.style.width = `${progress}%`;
-            if (rocketPercent) rocketPercent.innerText = `${progress}%`;
-        }, 50);
     }
 
     createSelectionGlowMesh() {
