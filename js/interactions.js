@@ -27,31 +27,29 @@ function initCustomCursor() {
     });
 
     function renderCursor() {
-        ringX += (mouseX - ringX) * 0.15;
-        ringY += (mouseY - ringY) * 0.15;
+        ringX += (mouseX - ringX) * 0.26;
+        ringY += (mouseY - ringY) * 0.26;
 
         ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
         requestAnimationFrame(renderCursor);
     }
     renderCursor();
 
-    // Hover effect on interactive elements
+    // Hover effect on interactive elements using transform scale
     const hoverElements = document.querySelectorAll('a, button, .glass-card, .skill-chip, .project-card');
     hoverElements.forEach((el) => {
         el.addEventListener('mouseenter', () => {
-            ring.style.width = '54px';
-            ring.style.height = '54px';
-            ring.style.borderColor = 'var(--accent-terracotta)';
+            ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%) scale(1.4)`;
+            ring.style.borderColor = 'rgba(200, 106, 75, 0.6)';
         });
         el.addEventListener('mouseleave', () => {
-            ring.style.width = '36px';
-            ring.style.height = '36px';
-            ring.style.borderColor = 'var(--accent-sage)';
+            ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%) scale(1)`;
+            ring.style.borderColor = 'rgba(91, 124, 97, 0.5)';
         });
     });
 }
 
-// Jackie Zhang-Inspired Project Deck Dragging / Hover Tilt
+// Project Deck Subtle 3D Depth & Hover Tilt
 function initProjectCardInteractions() {
     const cards = document.querySelectorAll('.project-card');
 
@@ -61,8 +59,8 @@ function initProjectCardInteractions() {
             const x = e.clientX - rect.left - rect.width / 2;
             const y = e.clientY - rect.top - rect.height / 2;
 
-            const tiltX = (y / rect.height) * -8;
-            const tiltY = (x / rect.width) * 8;
+            const tiltX = (y / rect.height) * -3.5;
+            const tiltY = (x / rect.width) * 3.5;
 
             card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-4px)`;
         });

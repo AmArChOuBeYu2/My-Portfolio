@@ -123,9 +123,9 @@ class World3D {
             mesh.rotation.y = Math.random() * Math.PI;
 
             mesh.userData = {
-                rotSpeedX: (Math.random() - 0.5) * 0.015,
-                rotSpeedY: (Math.random() - 0.5) * 0.015,
-                floatSpeed: Math.random() * 0.002 + 0.001,
+                rotSpeedX: (Math.random() - 0.5) * 0.005,
+                rotSpeedY: (Math.random() - 0.5) * 0.005,
+                floatSpeed: Math.random() * 0.001 + 0.0005,
                 floatOffset: Math.random() * Math.PI * 2,
                 initialY: mesh.position.y
             };
@@ -251,18 +251,18 @@ class World3D {
         this.camera.position.set(this.currentCameraPos.x, this.currentCameraPos.y, this.currentCameraPos.z);
         this.camera.lookAt(this.currentCameraLookAt.x, this.currentCameraLookAt.y, 0);
 
-        // Animate floating objects
+        // Animate floating objects with serene cadence
         this.objects.forEach((obj) => {
             obj.rotation.x += obj.userData.rotSpeedX;
             obj.rotation.y += obj.userData.rotSpeedY;
 
-            // Soft floating motion
-            obj.position.y = obj.userData.initialY + Math.sin(time * 2 + obj.userData.floatOffset) * 0.3;
+            // Calm, fluid floating motion (~8-second cycle)
+            obj.position.y = obj.userData.initialY + Math.sin(time * 0.8 + obj.userData.floatOffset) * 0.2;
         });
 
         // Rotate particles subtly
         if (this.particles) {
-            this.particles.rotation.y = time * 0.03;
+            this.particles.rotation.y = time * 0.01;
         }
 
         this.renderer.render(this.scene, this.camera);
