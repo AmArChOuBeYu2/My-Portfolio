@@ -228,13 +228,28 @@ class World3D {
 
         const time = Date.now() * 0.001;
 
-        // Smooth camera lerping
-        this.currentCameraPos.x += (this.targetCameraPos.x + this.mouse.x * 0.5 - this.currentCameraPos.x) * 0.05;
-        this.currentCameraPos.y += (this.targetCameraPos.y + this.mouse.y * 0.5 - this.currentCameraPos.y) * 0.05;
-        this.currentCameraPos.z += (this.targetCameraPos.z - this.currentCameraPos.z) * 0.05;
+        // Apple & Bruno Simon style subtle mouse parallax
+        const parallaxStrengthX = 0.8;
+        const parallaxStrengthY = 0.6;
+
+        // Mouse right (mouse.x > 0) -> camera position offset left (-x) & points right -> scene turns toward right cursor
+        // Mouse up (mouse.y > 0) -> camera position offset down (-y) & points up -> scene turns toward top cursor
+        const desiredX = this.targetCameraPos.x - this.mouse.x * parallaxStrengthX;
+        const desiredY = this.targetCameraPos.y - this.mouse.y * parallaxStrengthY;
+        const desiredZ = this.targetCameraPos.z;
+
+        // Ultra-smooth lerping with inertia (dampening factor 0.04)
+        this.currentCameraPos.x += (desiredX - this.currentCameraPos.x) * 0.04;
+        this.currentCameraPos.y += (desiredY - this.currentCameraPos.y) * 0.04;
+        this.currentCameraPos.z += (desiredZ - this.currentCameraPos.z) * 0.04;
+
+        // Symmetrical lookAt lerping across scroll stages
+        const targetLookAtY = this.targetCameraPos.y;
+        this.currentCameraLookAt.x += (this.targetCameraLookAt.x - this.currentCameraLookAt.x) * 0.04;
+        this.currentCameraLookAt.y += (targetLookAtY - this.currentCameraLookAt.y) * 0.04;
 
         this.camera.position.set(this.currentCameraPos.x, this.currentCameraPos.y, this.currentCameraPos.z);
-        this.camera.lookAt(this.currentCameraLookAt.x, this.currentCameraPos.y, 0);
+        this.camera.lookAt(this.currentCameraLookAt.x, this.currentCameraLookAt.y, 0);
 
         // Animate floating objects
         this.objects.forEach((obj) => {
