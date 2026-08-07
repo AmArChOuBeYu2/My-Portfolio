@@ -67,31 +67,31 @@ class World3D {
     }
 
     createFloatingShapes() {
-        // Materials matching psychological color palette
+        // Materials matching psychological color palette (Refined Minimal & Subtle Matte Aesthetic)
         const sageMat = new THREE.MeshStandardMaterial({
             color: 0x5B7C61,
-            roughness: 0.3,
-            metalness: 0.1
+            roughness: 0.65,
+            metalness: 0.02
         });
 
         const terracottaMat = new THREE.MeshStandardMaterial({
             color: 0xC86A4B,
-            roughness: 0.4,
-            metalness: 0.1
+            roughness: 0.75,
+            metalness: 0.0
         });
 
         const alabasterMat = new THREE.MeshStandardMaterial({
             color: 0xEFECE6,
-            roughness: 0.2,
-            metalness: 0.2
+            roughness: 0.60,
+            metalness: 0.02
         });
 
         const glassMat = new THREE.MeshPhysicalMaterial({
             color: 0xFFFFFF,
-            transmission: 0.9,
-            opacity: 1,
+            transmission: 0.85,
+            opacity: 0.95,
             transparent: true,
-            roughness: 0.1,
+            roughness: 0.25,
             ior: 1.5
         });
 
