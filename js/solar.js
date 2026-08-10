@@ -766,11 +766,12 @@ class SolarSystem {
         // Instantiate Oppenheimer soundtrack audio
         this.solarAudio = new SolarAudioTrack('Ludwig_G_ransson_-_Can_You_Hear_The_Music_Oppenheimer_Ost_(MP3.cc).mp3');
 
-        // One-time mousemove handler to comply with browser user-interaction policies
-        this.firstMouseMoveHandler = async () => {
-            if (this.firstMouseMoveHandler) {
-                window.removeEventListener('mousemove', this.firstMouseMoveHandler);
-                this.firstMouseMoveHandler = null;
+        // One-time interaction handler (mouse or touch) to comply with browser autoplay policies
+        this.firstInteractionHandler = async () => {
+            if (this.firstInteractionHandler) {
+                window.removeEventListener('mousemove', this.firstInteractionHandler);
+                window.removeEventListener('touchstart', this.firstInteractionHandler);
+                this.firstInteractionHandler = null;
             }
 
             try {
@@ -781,12 +782,13 @@ class SolarSystem {
                     }
                 }
             } catch (err) {
-                console.warn('Autoplay on mousemove failed:', err);
+                console.warn('Autoplay on interaction failed:', err);
             }
         };
 
-        // Add one-time mousemove listener
-        window.addEventListener('mousemove', this.firstMouseMoveHandler, { once: true });
+        // Add one-time mousemove and touchstart listeners
+        window.addEventListener('mousemove', this.firstInteractionHandler, { once: true });
+        window.addEventListener('touchstart', this.firstInteractionHandler, { once: true });
 
         // Volume slider listener for sound intensity
         if (solarVolume) {
@@ -800,9 +802,10 @@ class SolarSystem {
 
         // Exit / Cleanup handler when leaving Solar System page
         this.pageUnloadHandler = () => {
-            if (this.firstMouseMoveHandler) {
-                window.removeEventListener('mousemove', this.firstMouseMoveHandler);
-                this.firstMouseMoveHandler = null;
+            if (this.firstInteractionHandler) {
+                window.removeEventListener('mousemove', this.firstInteractionHandler);
+                window.removeEventListener('touchstart', this.firstInteractionHandler);
+                this.firstInteractionHandler = null;
             }
             if (this.solarAudio) {
                 this.solarAudio.stop();

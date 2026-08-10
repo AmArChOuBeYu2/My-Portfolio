@@ -426,14 +426,30 @@ body.loaded {
 /* Responsive Rules */
 @media (max-width: 800px) {
     .celestial-card {
-        right: 1.25rem;
-        left: 1.25rem;
+        right: 1rem;
+        left: 1rem;
         width: auto;
         top: auto;
-        bottom: 6rem;
+        bottom: 5.5rem;
         transform: translateY(40px);
+        max-height: 50vh;
+        overflow-y: auto;
     }
     .celestial-card.active { transform: translateY(0); }
     .solar-title-badge { display: none; }
-    .solar-hud-top { padding: 0.6rem 1rem; }
+    .solar-hud-top { padding: 0.5rem 0.75rem; gap: 0.4rem; }
+    
+    .planet-dock {
+        max-width: 95vw;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 0.4rem 0.75rem;
+        justify-content: flex-start;
+        bottom: 0.75rem;
+    }
+    .planet-pill {
+        flex-shrink: 0;
+        padding: 0.35rem 0.75rem;
+        font-size: 0.7rem;
+    }
 }
