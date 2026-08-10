@@ -1113,7 +1113,7 @@ body:hover .cursor-dot { opacity: 1; }
     .telemetry-hud {
         padding: 0.5rem 1rem;
     }
-    .hud-item:nth-child(2), .hud-item:nth-child(3) { display: none; }
+    .hud-item:not(.brand-badge) { display: none !important; }
 }
 
 @media (max-width: 600px) {
@@ -1122,23 +1122,29 @@ body:hover .cursor-dot { opacity: 1; }
     .image-frame-container { width: 250px; height: 330px; border-radius: 20px; padding: 6px; }
     .hero-visual-card::before { width: 240px; height: 320px; }
 
-    /* Mobile Phone Telemetry HUD */
+    /* Mobile Phone Telemetry HUD - Compact single pill fitting 100% viewport */
     .telemetry-hud {
         left: 0.5rem;
         right: 0.5rem;
         width: auto;
-        padding: 0.4rem 0.65rem;
-        gap: 0.4rem;
+        max-width: calc(100vw - 1rem);
+        padding: 0.35rem 0.65rem;
+        gap: 0.35rem;
         transform: translateX(0);
+        box-sizing: border-box;
+    }
+    .hud-actions {
+        gap: 0.35rem;
     }
     .volume-slider-wrap {
-        padding: 0.25rem 0.45rem;
-    }
-    .volume-slider {
-        width: 45px;
+        display: none !important;
     }
     .hud-btn {
-        padding: 0.35rem 0.65rem;
+        padding: 0.3rem 0.6rem;
+        font-size: 0.65rem;
+        gap: 0.25rem;
+    }
+    .hud-btn span {
         font-size: 0.65rem;
     }
 }

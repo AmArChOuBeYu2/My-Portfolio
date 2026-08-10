@@ -425,6 +425,15 @@ body.loaded {
 
 /* Responsive Rules */
 @media (max-width: 800px) {
+    /* Hide WASD desktop flight guide on mobile to prevent overlapping planet cards */
+    .flight-indicator {
+        display: none !important;
+    }
+
+    .solar-audio-control .volume-slider-wrap {
+        display: none !important;
+    }
+
     .celestial-card {
         right: 1rem;
         left: 1rem;
@@ -432,8 +441,9 @@ body.loaded {
         top: auto;
         bottom: 5.5rem;
         transform: translateY(40px);
-        max-height: 50vh;
+        max-height: 55vh;
         overflow-y: auto;
+        z-index: 95;
     }
     .celestial-card.active { transform: translateY(0); }
     .solar-title-badge { display: none; }
@@ -446,6 +456,7 @@ body.loaded {
         padding: 0.4rem 0.75rem;
         justify-content: flex-start;
         bottom: 0.75rem;
+        z-index: 90;
     }
     .planet-pill {
         flex-shrink: 0;
