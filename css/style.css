@@ -1117,8 +1117,26 @@ body:hover .cursor-dot { opacity: 1; }
 }
 
 @media (max-width: 600px) {
+    .section {
+        padding: 3.5rem 0;
+        scroll-margin-top: 5rem;
+    }
+    
+    /* Ensure Hero Badge "2nd Year SE Student @ NIAT" is 100% visible below sticky HUD */
+    .hero-section {
+        padding-top: 7.25rem !important;
+        padding-bottom: 3rem;
+        min-height: auto;
+    }
+
+    .badge-pill {
+        position: relative;
+        z-index: 10;
+        margin-top: 0.25rem;
+        margin-bottom: 1.25rem;
+    }
+
     .hero-title { font-size: 2.2rem; }
-    .section { padding: 3.5rem 0; }
     .image-frame-container { width: 250px; height: 330px; border-radius: 20px; padding: 6px; }
     .hero-visual-card::before { width: 240px; height: 320px; }
 
@@ -1146,6 +1164,32 @@ body:hover .cursor-dot { opacity: 1; }
     }
     .hud-btn span {
         font-size: 0.65rem;
+    }
+
+    /* Projects Section Mobile Alignment */
+    .projects-deck {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    .project-card {
+        padding: 1.35rem;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .project-card.featured-project {
+        grid-column: 1;
+    }
+    .project-actions {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 0.6rem;
+        align-items: stretch;
+    }
+    .project-actions .btn {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
     }
 }
 

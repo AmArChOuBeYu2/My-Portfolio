@@ -90,11 +90,11 @@ class SolarSystem {
         this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         this.container.appendChild(this.renderer.domElement);
 
-        // OrbitControls
+        // OrbitControls (Enabled by default for free 3D camera exploration)
         this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
         this.controls.enableDamping = true;
         this.controls.dampingFactor = 0.05;
-        this.controls.enabled = false;
+        this.controls.enabled = true;
 
         // Initial Camera Position
         this.camera.position.set(0, 10, 32);
@@ -134,9 +134,6 @@ class SolarSystem {
 
         this.setupDockListeners();
         this.setupHUDListeners();
-
-        // Select Sun Initially
-        this.selectPlanet('sun');
 
         // Start render loop
         this.animate();
@@ -816,10 +813,22 @@ class SolarSystem {
         window.addEventListener('pagehide', this.pageUnloadHandler);
     }
 
+    deselectPlanet() {
+        const card = document.getElementById('celestial-card');
+        if (card) card.classList.remove('active');
+        if (this.selectionGlowMesh) this.selectionGlowMesh.visible = false;
+        document.querySelectorAll('.planet-pill').forEach(p => p.classList.remove('active'));
+    }
+
     setupHUDListeners() {
         const flightBtn = document.getElementById('flight-toggle');
         const audioBtn = document.getElementById('audio-toggle');
         const audioText = document.getElementById('audio-text');
+        const cardCloseBtn = document.getElementById('card-close');
+
+        if (cardCloseBtn) {
+            cardCloseBtn.addEventListener('click', () => this.deselectPlanet());
+        }
 
         if (flightBtn) {
             flightBtn.addEventListener('click', () => this.toggleFreeFlight());
