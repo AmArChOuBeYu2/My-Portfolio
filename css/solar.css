@@ -183,6 +183,9 @@ body.loaded {
     gap: 0.4rem;
     transition: all 0.3s ease;
     text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    box-sizing: border-box;
 }
 
 .solar-btn:hover, .solar-btn.active {
@@ -192,7 +195,7 @@ body.loaded {
     font-weight: 700;
     box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
 }
-.solar-btn svg { width: 14px; height: 14px; }
+.solar-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
 
 /* Solar HUD Volume Control */
 .solar-audio-control {
@@ -451,6 +454,13 @@ body.loaded {
 }
 
 /* Responsive Rules */
+@media (max-width: 1100px) {
+    /* Hide center title badge on mid-size & tablet screens so buttons never overflow */
+    .solar-title-badge {
+        display: none !important;
+    }
+}
+
 @media (max-width: 800px) {
     /* Hide WASD desktop flight guide on mobile to prevent overlapping planet cards */
     .flight-indicator {
@@ -461,20 +471,33 @@ body.loaded {
         display: none !important;
     }
 
+    .solar-hud-top {
+        top: 0.75rem;
+        left: 0.75rem;
+        right: 0.75rem;
+        padding: 0.4rem 0.75rem;
+        gap: 0.35rem;
+        border-radius: 50px;
+        box-sizing: border-box;
+    }
+
+    .solar-btn {
+        padding: 0.38rem 0.65rem;
+        font-size: 0.68rem;
+    }
+
     .celestial-card {
-        right: 1rem;
-        left: 1rem;
+        right: 0.75rem;
+        left: 0.75rem;
         width: auto;
         top: auto;
-        bottom: 5.5rem;
+        bottom: 5.25rem;
         transform: translateY(40px);
         max-height: 55vh;
         overflow-y: auto;
         z-index: 95;
     }
     .celestial-card.active { transform: translateY(0); }
-    .solar-title-badge { display: none; }
-    .solar-hud-top { padding: 0.5rem 0.75rem; gap: 0.4rem; }
     
     .planet-dock {
         max-width: 95vw;
@@ -489,5 +512,19 @@ body.loaded {
         flex-shrink: 0;
         padding: 0.35rem 0.75rem;
         font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .solar-hud-top {
+        left: 0.5rem;
+        right: 0.5rem;
+        padding: 0.35rem 0.5rem;
+        gap: 0.25rem;
+    }
+    .solar-btn {
+        padding: 0.35rem 0.55rem;
+        font-size: 0.65rem;
+        gap: 0.25rem;
     }
 }
