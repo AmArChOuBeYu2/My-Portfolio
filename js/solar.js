@@ -861,7 +861,7 @@ class SolarSystem {
         }
 
         if (flightBtn) flightBtn.classList.toggle('active', this.isFreeFlight);
-        if (flightText) flightText.innerText = this.isFreeFlight ? 'ORBIT MODE' : 'WASD FREE FLIGHT';
+        if (flightText) flightText.innerText = this.isFreeFlight ? 'ORBIT MODE' : 'FREE FLIGHT';
 
         if (flightGuide) {
             flightGuide.innerHTML = `<i data-lucide="gamepad-2"></i> <span>WASD / Arrows = Fly | Space = Up | Shift = Down | Click & Drag = Look Around</span>`;
